@@ -35,17 +35,20 @@ function keyUp(e) {
 function gamePlay() {
   console.log("Game clicked");
   let car = document.querySelector(".car");
+  let road = gameArea.getBoundingClientRect();
+  console.log(road);
+
   if (player.start) {
-    if (keys.ArrowUp) {
+    if (keys.ArrowUp && player.y > road.top + 70) {
       player.y -= player.speed;
     }
-    if (keys.ArrowDown) {
+    if (keys.ArrowDown && player.y < road.bottom - 70) {
       player.y += player.speed;
     }
-    if (keys.ArrowLeft) {
+    if (keys.ArrowLeft && player.x > 0) {
       player.x -= player.speed;
     }
-    if (keys.ArrowRight) {
+    if (keys.ArrowRight && player.x < road.width - 50) {
       player.x += player.speed;
     }
     car.style.top = player.y + "px";
@@ -60,6 +63,19 @@ function start() {
   player.start = true;
   window.requestAnimationFrame(gamePlay);
 
+  for (x = 0; x < 6; x++) {
+    let roadLine = document.createElement("div");
+    roadLine.setAttribute("class", "lines");
+    roadLine.style.top = x * 150 + "px";
+    gameArea.appendChild(roadLine);
+  }
+  for (x = 0; x < 6; x++) {
+    let roadLineOne = document.createElement("div");
+    roadLineOne.setAttribute("class", "linesOne");
+    roadLineOne.style.top = x * 150 + "px";
+    gameArea.appendChild(roadLineOne);
+  }
+
   let car = document.createElement("div");
   car.setAttribute("class", "car");
   //   car.innerText = "Car";
@@ -70,4 +86,13 @@ function start() {
 
   console.log("top position" + car.offsetTop);
   console.log("left position" + car.offsetLeft);
+
+  //   Enemy
+  let enemy = document.createElement("div");
+  enemy.setAttribute("class", "enemy");
+  //   enemy.innerText = "enemy";
+  gameArea.appendChild(enemy);
+
+  console.log("top position" + enemy.offsetTop);
+  console.log("left position" + enemy.offsetLeft);
 }
