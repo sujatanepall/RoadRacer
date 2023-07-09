@@ -31,6 +31,12 @@ function keyUp(e) {
   //   console.log(e.key);
   console.log(keys);
 }
+// moving line
+function moveLines() {
+  let lines = document.querySelectorAll(".lines");
+  lines.forEach(function (item) {});
+  let linesOne = document.querySelectorAll(".linesOne");
+}
 
 function gamePlay() {
   console.log("Game clicked");
@@ -39,6 +45,8 @@ function gamePlay() {
   console.log(road);
 
   if (player.start) {
+    moveLines();
+
     if (keys.ArrowUp && player.y > road.top + 70) {
       player.y -= player.speed;
     }
@@ -66,7 +74,8 @@ function start() {
   for (x = 0; x < 6; x++) {
     let roadLine = document.createElement("div");
     roadLine.setAttribute("class", "lines");
-    roadLine.style.top = x * 150 + "px";
+    roadLine.y = x * 150;
+    roadLine.style.top = roadLine.y + "px";
     gameArea.appendChild(roadLine);
   }
   for (x = 0; x < 6; x++) {
