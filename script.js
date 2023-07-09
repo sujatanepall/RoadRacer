@@ -34,8 +34,21 @@ function keyUp(e) {
 // moving line
 function moveLines() {
   let lines = document.querySelectorAll(".lines");
-  lines.forEach(function (item) {});
-  let linesOne = document.querySelectorAll(".linesOne");
+  lines.forEach(function (item) {
+    if (item.y >= 850) {
+      item.y -= 750;
+    }
+    item.y += player.speed;
+    item.style.top = item.y + "px";
+  });
+  let lineOne = document.querySelectorAll(".lineOne");
+  lineOne.forEach(function (item) {
+    if (item.y >= 850) {
+      item.y -= 750;
+    }
+    item.y += player.speed;
+    item.style.top = item.y + "px";
+  });
 }
 
 function gamePlay() {
@@ -71,14 +84,14 @@ function start() {
   player.start = true;
   window.requestAnimationFrame(gamePlay);
 
-  for (x = 0; x < 6; x++) {
+  for (x = 0; x < 7; x++) {
     let roadLine = document.createElement("div");
     roadLine.setAttribute("class", "lines");
     roadLine.y = x * 150;
     roadLine.style.top = roadLine.y + "px";
     gameArea.appendChild(roadLine);
   }
-  for (x = 0; x < 6; x++) {
+  for (x = 0; x < 7; x++) {
     let roadLineOne = document.createElement("div");
     roadLineOne.setAttribute("class", "linesOne");
     roadLineOne.style.top = x * 150 + "px";
@@ -96,12 +109,15 @@ function start() {
   console.log("top position" + car.offsetTop);
   console.log("left position" + car.offsetLeft);
 
-  //   Enemy
-  let enemy = document.createElement("div");
-  enemy.setAttribute("class", "enemy");
-  //   enemy.innerText = "enemy";
-  gameArea.appendChild(enemy);
+  // console.log("top position" + enemy.offsetTop);
+  // console.log("left position" + enemy.offsetLeft);
 
-  console.log("top position" + enemy.offsetTop);
-  console.log("left position" + enemy.offsetLeft);
+  // EnemyCar
+  for (x = 0; x < 3; x++) {
+    let enemyCar = document.createElement("div");
+    enemyCar.setAttribute("class", "enemy");
+    enemyCar.y = x * 150;
+    enemyCar.style.top = enemyCar.y + "px";
+    gameArea.appendChild(enemyCar);
+  }
 }
