@@ -31,6 +31,19 @@ function keyUp(e) {
   //   console.log(e.key);
   console.log(keys);
 }
+
+// collision
+function isColide(a, b) {
+  aRect = a.getBoundingClientRect();
+  bRect = b.getBoundingClientRect();
+
+  return !(
+    aRect.bottom < bRect.top ||
+    aRect.top > bRect.bottom ||
+    aRect.right < bRect.left ||
+    aRect.left > bRect.right
+  );
+}
 // moving line
 function moveLines() {
   let lines = document.querySelectorAll(".lines");
@@ -51,6 +64,20 @@ function moveLines() {
   });
 }
 
+// moving Enemy
+function moveEnemy() {
+  let enemy = document.querySelectorAll(".enemy");
+
+  enemy.forEach(function (item) {
+    if (item.y >= 750) {
+      item.y = -320;
+      item.style.left = Math.floor(Math.random() * 350) + "px";
+    }
+    item.y += player.speed;
+    item.style.top = item.y + "px";
+  });
+}
+
 function gamePlay() {
   console.log("Game clicked");
   let car = document.querySelector(".car");
@@ -59,6 +86,7 @@ function gamePlay() {
 
   if (player.start) {
     moveLines();
+    moveEnemy();
 
     if (keys.ArrowUp && player.y > road.top + 70) {
       player.y -= player.speed;
@@ -116,8 +144,9 @@ function start() {
   for (x = 0; x < 3; x++) {
     let enemyCar = document.createElement("div");
     enemyCar.setAttribute("class", "enemy");
-    enemyCar.y = x * 150;
+    enemyCar.y = (x + 1) * 350 * -1;
     enemyCar.style.top = enemyCar.y + "px";
+    enemyCar.style.left = Math.floor(Math.random() * 350) + "px";
     gameArea.appendChild(enemyCar);
   }
 }
