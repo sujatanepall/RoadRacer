@@ -1,5 +1,6 @@
 const score = document.querySelector(".score");
 const healthLine = document.querySelector(".healthLine");
+const livesLine = document.querySelector(".livesLine");
 const popUp = document.querySelector(".popUp");
 const gameArea = document.querySelector(".gameArea");
 
@@ -7,7 +8,9 @@ console.log(gameArea);
 
 popUp.addEventListener("click", start);
 
-let player = { speed: 5, healthLine: 5, score: 0 };
+let healthBar = 100;
+let lives = 3;
+let player = { speed: 5, score: 0 };
 
 let keys = {
   ArrowUp: false,
@@ -65,6 +68,8 @@ function moveLines() {
   });
 }
 
+// function to end game
+
 function endGame() {
   player.start = false;
   popUp.classList.remove("hide");
@@ -73,16 +78,31 @@ function endGame() {
     player.score +
     " <br>Press here to restart the Game.";
 }
-
-// moving Enemy
+let canCollide = true;
+// Function for moving Enemy
 function moveEnemy(car) {
   let enemy = document.querySelectorAll(".enemy");
 
   enemy.forEach(function (item) {
-    if (isColide(car, item)) {
+    if (isColide(car, item) && canCollide) {
       //calling funtion collide
       console.log("Boom Hit");
-      endGame();
+
+      healthBar -= 20; //Decreases health when collided with an enemy
+      player.y = gameArea.offsetHeight - car.offsetHeight - 10;
+      car.style.top = player.y + "px";
+
+      canCollide = false;
+      setTimeout(() => {
+        canCollide = true;
+      }, 1000);
+      if (healthBar <= 0) {
+        healthBar = 100;
+        lives--; //Decreases lives if health reaches zero
+      }
+      if (lives == 0) {
+        endGame();
+      }
     }
 
     if (item.y >= 750) {
@@ -95,10 +115,10 @@ function moveEnemy(car) {
 }
 
 function gamePlay() {
-  console.log("Game clicked");
+  // console.log("Game clicked");
   let car = document.querySelector(".car");
   let road = gameArea.getBoundingClientRect();
-  console.log(road);
+  // console.log(road);
 
   if (player.start) {
     moveLines();
@@ -121,24 +141,30 @@ function gamePlay() {
     car.style.left = player.x + "px";
 
     window.requestAnimationFrame(gamePlay);
-    console.log(player.score++);
+    // console.log(player.score++);
 
     player.score++;
     let ps = player.score - 1;
     score.innerText = "Score: " + ps;
+
+    healthLine.innerText = " Health:" + healthBar;
+    livesLine.innerText = " Lives: " + lives;
+
     // console.log(player.healthLine--);
   }
 }
-
+// Start Function
 function start() {
   gameArea.classList.remove("hide");
   popUp.classList.add("hide");
 
   player.start = true;
-  player.healthLine = 3;
+  healthBar = 100;
+  lives = 3;
   player.score = 0;
 
   window.requestAnimationFrame(gamePlay);
+  popUp.addEventListener("click", restart);
 
   for (x = 0; x < 7; x++) {
     let roadLine = document.createElement("div");
@@ -163,11 +189,8 @@ function start() {
   player.x = car.offsetLeft;
   player.y = car.offsetTop;
 
-  console.log("top position" + car.offsetTop);
-  console.log("left position" + car.offsetLeft);
-
-  // console.log("top position" + enemy.offsetTop);
-  // console.log("left position" + enemy.offsetLeft);
+  // console.log("top position" + car.offsetTop);
+  // console.log("left position" + car.offsetLeft);
 
   // EnemyCar
   for (x = 0; x < 3; x++) {
@@ -179,4 +202,16 @@ function start() {
     enemyCar.style.left = Math.floor(Math.random() * 350) + "px";
     gameArea.appendChild(enemyCar);
   }
+}
+
+function restart() {
+  // Reset game elements and variables
+  gameArea.innerHTML = "";
+  healthBar = 100;
+  lives = 3;
+  player.score = 0;
+  popUp.classList.add("hide");
+
+  // Start the game again
+  start();
 }
