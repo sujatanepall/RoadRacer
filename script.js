@@ -12,6 +12,8 @@ let player = { speed: 5, score: 0 };
 let projectiles = [];
 
 const fire = new Audio("./audio/fire.wav");
+const crash = new Audio("./audio/crash.mp3");
+const over = new Audio("./audio/gameover.mp3");
 
 let keys = {
   ArrowUp: false,
@@ -81,6 +83,7 @@ function endGame() {
     "Game Over <br> Your final Score is " +
     player.score +
     " <br>Press here to restart the Game.";
+  over.play();
 }
 
 let canCollide = true;
@@ -91,6 +94,7 @@ function moveEnemy(car) {
   enemy.forEach(function (item) {
     if (isColide(car, item) && canCollide) {
       //calling function collide
+      crash.play();
       console.log("Boom Hit");
 
       healthBar -= 20; //Decreases health when collided with an enemy
@@ -111,7 +115,7 @@ function moveEnemy(car) {
     }
 
     if (item.y >= 750) {
-      item.y = -320;
+      item.y = -300;
       item.style.left = Math.floor(Math.random() * 350) + "px";
     }
     item.y += player.speed;
