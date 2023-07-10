@@ -1,27 +1,40 @@
 * {
   margin: 0;
   padding: 0;
+  font-family: "Inter", sans-serif;
+  font-family: "Josefin Sans", sans-serif;
 }
 .hide {
   display: none;
 }
+.roadRacer {
+  width: 100%;
+  height: 100vh;
+  background-image: url("assets/backgrass.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
 .car {
   width: 50px;
-  height: 70px;
-  background: red;
+  height: 80px;
+  /* background: red; */
   position: absolute;
   /* left: 50px; */
   bottom: 120px;
+  background-image: url("assets/car.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 .enemy {
   width: 50px;
-  height: 70px;
-  background: rgb(100, 236, 16);
+  height: 80px;
+  /* background: rgb(100, 236, 16); */
   position: absolute;
-
-  /* left: 50px; */
-  top: 120px;
+  background-image: url("assets/car1.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
+
 .lines {
   width: 10px;
   height: 100px;
@@ -43,4 +56,44 @@
   margin: auto;
   position: relative;
   overflow: hidden;
+  border-right: 7px dashed #c8d6e5;
+  border-left: 7px dashed #c8d6e5;
+}
+.score {
+  position: absolute;
+  top: 15px;
+  left: 10px;
+  background: #10ac84;
+  width: 150px;
+  /* height: 70px; */
+  line-height: 70px;
+  text-align: center;
+  color: white;
+  font-size: 1.5rem;
+  box-shadow: 0 5px 5px #777;
+}
+
+.popUp {
+  position: absolute;
+  background-color: aliceblue;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(164, 72, 72);
+  z-index: 1;
+  text-align: center;
+  border: 1px solid #320707;
+  padding: 15px;
+  margin: auto;
+  width: 50%;
+  cursor: pointer;
+  letter-spacing: 5;
+  font-size: 20px;
+  word-spacing: 3;
+  line-height: 30px;
+  text-transform: uppercase;
+  box-shadow: 0 5px 5px #777;
+}
+h1 {
+  color: #6a4f4f;
 }
