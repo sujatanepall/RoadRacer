@@ -3,6 +3,7 @@ const healthLine = document.querySelector(".healthLine");
 const livesLine = document.querySelector(".livesLine");
 const popUp = document.querySelector(".popUp");
 const gameArea = document.querySelector(".gameArea");
+const instructions = document.querySelector(".instructions");
 
 popUp.addEventListener("click", start);
 
@@ -97,7 +98,7 @@ function moveEnemy(car) {
       crash.play();
       console.log("Boom Hit");
 
-      healthBar -= 20; //Decreases health when collided with an enemy
+      healthBar -= 50; //Decreases health when collided with an enemy
       player.y = gameArea.offsetHeight - car.offsetHeight - 10;
       car.style.top = player.y + "px";
 
@@ -151,6 +152,7 @@ function gamePlay() {
         projectile.remove();
         player.score += 1000;
         score.innerText = "Score: " + player.score;
+        crash.play();
       }
     });
     if (projectile.y < 0) {
